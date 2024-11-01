@@ -79,20 +79,20 @@ def f_votos_titulo( df, titulo ):
     else:
         return f"La película {titulo} no cuenta con más de 2000 valoraciones. "
 
-# def f_get_actor(df, actor):
-#     actor = actor.title()
+def f_get_actor(df, actor):
+    actor = actor.title()
 
-#     #Se filtra dataframe con el nombre del actor
-#     df_actor = df[df["name_actor"] == actor]
+    #Se filtra dataframe con el nombre del actor
+    df_actor = df[df["name_actor"] == actor]
 
-#     if df_actor.empty:
-#         return f"El actor '{actor}' no se encuentra en la base de datos. Ingrese otro por favor."
+    if df_actor.empty:
+        return f"El actor '{actor}' no se encuentra en la base de datos. Ingrese otro por favor."
         
-#     cantidad_films = df_actor.shape[0]
-#     retorno = df ['return'].sum()
-#     promedio = round(retorno/cantidad_films , 6)
+    cantidad_films = df_actor.shape[0]
+    retorno = df ['return'].sum()
+    promedio = round(retorno/cantidad_films , 6)
 
-#     return f"El actor {actor} ha participado de {cantidad_films} cantidad de filmaciones. El mismo ha conseguido un retorno de {retorno} con un promedio de {promedio}"
+    return f"El actor {actor} ha participado de {cantidad_films} cantidad de filmaciones. El mismo ha conseguido un retorno de {retorno} con un promedio de {promedio}"
 
 # def f_get_director(df, name):
 #     name = name.title()
@@ -182,17 +182,17 @@ def Votos_Titulo(titulo:str):
     load_datasets()
     return {"message":f_votos_titulo(movie_api,titulo)}
 
-# @app.get("/Get_Actor/{actor}")
-# def Get_Actor(actor:str):
-#     """
-#     Input:
-#     - Nombre del actor (str)
+@app.get("/Get_Actor/{actor}")
+def Get_Actor(actor:str):
+    """
+    Input:
+    - Nombre del actor (str)
 
-#     Output:
-#     - Mensaje: 'El actor X ha participado de X cantidad de filmaciones, el mismo ha conseguido un retorno de X con un promedio de X por filmación'
-#      """
-#     load_datasets()
-#     return {"message":f_get_actor(movie_cast,actor)}
+    Output:
+    - Mensaje: 'El actor X ha participado de n cantidad de filmaciones, el mismo ha conseguido un retorno de __ con un promedio de __ por filmación'
+     """
+    load_datasets()
+    return {"message":f_get_actor(movie_cast,actor)}
 
 # @app.get("/Get_Director/{director}")
 # def Get_Director(director:str):
