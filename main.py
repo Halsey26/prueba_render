@@ -3,35 +3,34 @@ import pandas as pd
 from fastapi.responses import JSONResponse
 # from Modelo.modelo_ML import recomendacion  # Importar la función de recomendación
 
-
 app = FastAPI()
 
 # Variables globales para los datasets, inicialmente vacías
-# movie_api = None
-# movie_cast = None
-# movie_crew = None
-# movies_filt = None
+movie_api = None
+movie_cast = None
+movie_crew = None
+movies_filt = None
 
-# # Función para cargar los datasets cuando sean necesarios
-# def load_datasets():
-#     global movie_api, movie_cast, movie_crew, movies_filt
-#     if movie_api is None:
-#         movie_api = pd.read_parquet('datasets/movie_dataset_final.parquet', engine='pyarrow')
-#     if movie_cast is None:
-#         movie_cast = pd.read_parquet('datasets/movie_cast.parquet', engine='pyarrow')
-#     if movie_crew is None:
-#         movie_crew = pd.read_parquet('datasets/movie_crew.parquet', engine='pyarrow')
-#     if movies_filt is None:
-#         movies_filt = pd.read_parquet('datasets/movie_modelo.parquet')
+# Función para cargar los datasets cuando sean necesarios
+def load_datasets():
+    global movie_api, movie_cast, movie_crew, movies_filt
+    if movie_api is None:
+        movie_api = pd.read_parquet('datasets/movie_dataset_final.parquet', engine='pyarrow')
+    if movie_cast is None:
+        movie_cast = pd.read_parquet('datasets/movie_cast.parquet', engine='pyarrow')
+    if movie_crew is None:
+        movie_crew = pd.read_parquet('datasets/movie_crew.parquet', engine='pyarrow')
+    if movies_filt is None:
+        movies_filt = pd.read_parquet('datasets/movie_modelo.parquet')
 
 
-# #FUNCIONES
-# def f_filmaciones_mes(df, mes, column):
-#     mes= mes.capitalize()
-#     pelis_mes= df[df[column]==mes ]   
+#FUNCIONES
+def f_filmaciones_mes(df, mes, column):
+    mes= mes.capitalize()
+    pelis_mes= df[df[column]==mes ]   
 
-#     len_films = len(pelis_mes)
-#     return f"{len_films} cantidad de películas fueron estrenadas en el mes de {mes}"
+    len_films = len(pelis_mes)
+    return f"{len_films} cantidad de películas fueron estrenadas en el mes de {mes}"
 
 # def f_filmaciones_dia(df,day,column ):
 #     dias_semana = {0:'Lunes', 1:'Martes', 2:'Miercoles', 3:'Jueves', 4: 'Viernes', 
@@ -135,17 +134,17 @@ app = FastAPI()
 async def ruta_prueba():
     return "Hola, esto es una prueba"
 
-# @app.get("/Cantidad_Filmacione_Mes/{mes}")
-# def cantidad_filmaciones_mes(mes:str):
-#     """
-#     Input:
-#     - Mes del año. (str)
+@app.get("/Cantidad_Filmacione_Mes/{mes}")
+def cantidad_filmaciones_mes(mes:str):
+    """
+    Input:
+    - Mes del año. (str)
 
-#     Output:
-#     - Mensaje: 'X cantidad de películas fueron estrenadas en el mes de X.'
-#     """
-#     load_datasets()
-#     return {"message":f_filmaciones_mes(movie_api,mes,'release_meses')}
+    Output:
+    - Mensaje: 'X cantidad de películas fueron estrenadas en el mes de X.'
+    """
+    load_datasets()
+    return {"message":f_filmaciones_mes(movie_api,mes,'release_meses')}
 
 # @app.get("/Cantidad_Filmacione_Dia/{dia}")
 # def cantidad_filmaciones_dia(dia:str):
